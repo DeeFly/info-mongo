@@ -1,8 +1,8 @@
 package info.gaofei.infomongo.aop;
 
-import info.gaofei.infomongo.aop.annotation.MultiMongo;
 import info.gaofei.infomongo.aop.handler.DecisionHandler;
-import info.gaofei.infomongo.dao.multi.MongodbTemplateContextHolder;
+import info.gaofei.infomongo.dao.multimongo.MongodbTemplateContextHolder;
+import info.gaofei.infomongo.dao.multimongo.MultiMongo;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;

@@ -1,7 +1,8 @@
-package info.gaofei.infomongo.dao.multi;
+package info.gaofei.infomongo.dao;
 
 import info.gaofei.infomongo.bean.Entity;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 import java.util.List;
 
@@ -21,7 +22,12 @@ public interface EntityDao<E extends Entity> {
     String insert(E entity);
 
     /**
-     * 新增文档到数据库的集合中
+     * 根据查询对象删除文档
      */
-    void insert(Object objectToInsert);
+    void delete(Query query);
+
+    /**
+     * 更新文档
+     */
+    void updateMulti(Query query, Update update);
 }

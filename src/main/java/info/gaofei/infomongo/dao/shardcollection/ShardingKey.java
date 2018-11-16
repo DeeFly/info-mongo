@@ -1,4 +1,4 @@
-package info.gaofei.infomongo.dao.multi;
+package info.gaofei.infomongo.dao.shardcollection;
 
 import org.springframework.core.annotation.AliasFor;
 

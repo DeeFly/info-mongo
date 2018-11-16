@@ -1,6 +1,9 @@
-package info.gaofei.infomongo.aop.annotation;
+package info.gaofei.infomongo.dao.multimongo;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * Created by GaoQingming on 2018/11/15 0015.

@@ -1,4 +1,4 @@
-package info.gaofei.infomongo.dao.multi;
+package info.gaofei.infomongo.dao.multimongo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

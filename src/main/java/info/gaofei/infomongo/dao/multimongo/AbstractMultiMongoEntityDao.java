@@ -1,6 +1,8 @@
-package info.gaofei.infomongo.dao.multi;
+package info.gaofei.infomongo.dao.multimongo;
 
 import info.gaofei.infomongo.bean.Entity;
+import info.gaofei.infomongo.dao.AbstractEntityDao;
+import info.gaofei.infomongo.dao.multimongo.MongoTemplateHolder;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 /**

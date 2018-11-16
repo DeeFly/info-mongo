@@ -1,4 +1,4 @@
-package info.gaofei.infomongo.dao.multi;
+package info.gaofei.infomongo.dao;
 
 import info.gaofei.infomongo.bean.Entity;
 import org.slf4j.Logger;
@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.MongoCollectionUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.ParameterizedType;
@@ -47,6 +48,14 @@ public abstract class AbstractEntityDao<E extends Entity> implements EntityDao<E
 
     }
 
+    protected MongoTemplate getMongoTemplate() {
+        return this.mongoTemplate;
+    }
+
+    protected String getCollectionName() {
+        return this.collectionName;
+    }
+
     protected Class<E> getClassType() {
         return this.classType;
     }
@@ -59,20 +68,17 @@ public abstract class AbstractEntityDao<E extends Entity> implements EntityDao<E
 
     @Override
     public String insert(E entity) {
-        insert((Object) entity);
+        getMongoTemplate().insert(entity, getCollectionName());
         return entity.getId();
     }
 
     @Override
-    public void insert(Object objectToInsert) {
-        getMongoTemplate().insert(objectToInsert, getCollectionName());
+    public void delete(Query query) {
+
     }
 
-    protected MongoTemplate getMongoTemplate() {
-        return this.mongoTemplate;
-    }
+    @Override
+    public void updateMulti(Query query, Update update) {
 
-    protected String getCollectionName() {
-        return this.collectionName;
     }
 }

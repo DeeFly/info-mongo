@@ -1,6 +1,8 @@
-package info.gaofei.infomongo.dao.multi;
+package info.gaofei.infomongo.dao.shardcollection;
 
+import com.mongodb.DBObject;
 import info.gaofei.infomongo.bean.Entity;
+import info.gaofei.infomongo.dao.EntityDao;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,17 +10,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.MongoCollectionUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by GaoQingming on 2018/11/15 0015.
  */
-public abstract class AbstractShardingEntityDao<E extends Entity> implements EntityDao<E> {
+public abstract class AbstractShardEntityDao<E extends Entity> implements EntityDao<E> {
     /**
      * The maximum shard count, used if a higher value is implicitly specified.
      * MUST be a power of two <= 1<<10.
@@ -52,7 +57,8 @@ public abstract class AbstractShardingEntityDao<E extends Entity> implements Ent
     private MongoTemplate mongoTemplate;
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public AbstractShardingEntityDao() {
+    public AbstractShardEntityDao() {
+        logger.info("start initializing shard dao for collection :{}", collectionName);
         String preferedCollectionName = MongoCollectionUtils.getPreferredCollectionName(classType);
         if (classType.isAnnotationPresent(Document.class)) {
             Document document = classType.getAnnotation(Document.class);
@@ -70,6 +76,11 @@ public abstract class AbstractShardingEntityDao<E extends Entity> implements Ent
         }
         int shardingCount = shardingKey.shardingCount();
         this.shardingCount = shardingCountFor(shardingCount);
+        logger.info("finished initializing shard dao for collection :{}", collectionName);
+    }
+
+    protected MongoTemplate getMongoTemplate() {
+        return this.mongoTemplate;
     }
 
     private int shardingCountFor(int i) {
@@ -96,8 +107,72 @@ public abstract class AbstractShardingEntityDao<E extends Entity> implements Ent
         return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
     }
 
-    public static void main(String[] args) {
-        int result = tableSizeFor(5);
-        System.out.println(result);
+    private String shardingKeyToCollectionName(Object shardValue) {
+        Optional.ofNullable(shardValue).orElseThrow(() -> new IllegalArgumentException("shard value shouldn't be empty !"));
+        int hashCode = shardValue.hashCode();
+        int tableSequence = hashCode & shardingCount - 1;
+        return parseSequenceToCollectionName(tableSequence);
+    }
+
+    private String parseSequenceToCollectionName(int sequence) {
+        return collectionName + "_" + sequence;
+    }
+
+    protected String getCollectionNameFromQuery(Query query) {
+        DBObject dbObject = query.getQueryObject();
+        Object shardValue = dbObject.get(shardingColumn);
+        if (shardValue == null) {
+            return null;
+        }
+        return shardingKeyToCollectionName(shardValue);
+    }
+
+    protected String getCollectionNameFromEntity(E entity) {
+        Object shardValue = null;
+        try {
+            shardValue = FieldUtils.readField(shardingField, entity, true);
+            if (shardValue == null) {
+                return null;
+            }
+        } catch (IllegalAccessException e) {
+            throw new IllegalArgumentException("got IllegalAccessException when reading shard value !");
+        }
+        return shardingKeyToCollectionName(shardValue);
+    }
+
+    @Override
+    public String insert(E entity) {
+        getMongoTemplate().insert(entity, getCollectionNameFromEntity(entity));
+        return entity.getId();
+    }
+
+    @Override
+    public <T> List<T> find(Query query, Class<T> clazz) {
+        return getMongoTemplate().find(query, clazz, getCollectionNameFromQuery(query));
+    }
+
+    @Override
+    public void delete(Query query) {
+        String collectionNmae = getCollectionNameFromQuery(query);
+        if (collectionNmae != null) {
+            getMongoTemplate().remove(query, classType, collectionNmae);
+            return;
+        }
+        for (int i = 0, len = shardingCount; i < len; i++) {
+            getMongoTemplate().remove(query, classType, parseSequenceToCollectionName(i));
+        }
+    }
+
+
+    @Override
+    public void updateMulti(Query query, Update update) {
+        String collectionNmae = getCollectionNameFromQuery(query);
+        if (collectionNmae != null) {
+            getMongoTemplate().updateMulti(query, update, collectionNmae);
+            return;
+        }
+        for (int i = 0, len = shardingCount; i < len; i++) {
+            getMongoTemplate().updateMulti(query, update, parseSequenceToCollectionName(i));
+        }
     }
 }
