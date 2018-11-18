@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/data/mongo
+http://www.springframework.org/schema/data/mongo/spring-mongo-1.7.xsd
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="info.gaofei.infomongo.service">
+        <context:include-filter type="assignable" expression="info.gaofei.infomongo.dao.EntityDao"/>
+    </context:component-scan>
+
+
+
+
+
+
+
+
+
+    <mongo:mongo-client id="mongo" replica-set="${mongomain.replicaset}" credentials="${mongomain.username}:${mongomain.password}@${mongomain.databaseName}">
+        <mongo:client-options
+                max-wait-time="12000"
+                min-connections-per-host="50"
+                connections-per-host="200"
+                write-concern="REPLICAS_SAFE"
+                read-preference="SECONDARY_PREFERRED"/>
+    </mongo:mongo-client>
+
+    <mongo:db-factory id="mongoDbFactory" mongo-ref="mongo" dbname="${mongomain.databaseName}"/>
+    <bean id="mongoMappingContext" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"/>
+    <bean id="mappingMongoConverter" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
+        <constructor-arg name="mappingContext" ref="mongoMappingContext" />
+    </bean>
+    <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory"/>
+        <constructor-arg name="mongoConverter" ref="mappingMongoConverter"/>
+    </bean>
+
+    <mongo:mongo-client id="mongoMain" replica-set="${mongomain.replicaset}" credentials="${mongomain.username}:${mongomain.password}@${mongomain.databaseName}">
+        <mongo:client-options
+                max-wait-time="12000"
+                min-connections-per-host="50"
+                connections-per-host="200"
+                write-concern="REPLICAS_SAFE"
+                read-preference="SECONDARY_PREFERRED"/>
+    </mongo:mongo-client>
+    <mongo:db-factory id="mongoDbFactoryMain" mongo-ref="mongoMain" dbname="${mongomain.databaseName}"/>
+    <bean id="mongoMappingContextMain" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"/>
+    <bean id="mappingMongoConverterMain" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactoryMain" />
+        <constructor-arg name="mappingContext" ref="mongoMappingContextMain" />
+    </bean>
+    <bean id="mongoTemplateMain" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactoryMain"/>
+        <constructor-arg name="mongoConverter" ref="mappingMongoConverterMain"/>
+    </bean>
+
+    <mongo:mongo-client id="mongo2015" replica-set="${mongo2015.replicaset}" credentials="${mongo2015.username}:${mongo2015.password}@${mongo2015.databaseName}">
+        <mongo:client-options
+                max-wait-time="12000"
+                min-connections-per-host="50"
+                connections-per-host="200"
+                write-concern="REPLICAS_SAFE"
+                read-preference="SECONDARY_PREFERRED"/>
+    </mongo:mongo-client>
+    <mongo:db-factory id="mongoDbFactory2015" mongo-ref="mongo2015" dbname="${mongo2015.databaseName}"/>
+    <bean id="mongoMappingContext2015" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"/>
+    <bean id="mappingMongoConverter2015" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory2015" />
+        <constructor-arg name="mappingContext" ref="mongoMappingContext2015" />
+    </bean>
+    <bean id="mongoTemplate2015" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory2015"/>
+        <constructor-arg name="mongoConverter" ref="mappingMongoConverter2015"/>
+    </bean>
+
+    <mongo:mongo-client id="mongo2016" replica-set="${mongo2016.replicaset}" credentials="${mongo2016.username}:${mongo2016.password}@${mongo2016.databaseName}">
+        <mongo:client-options
+                max-wait-time="12000"
+                min-connections-per-host="50"
+                connections-per-host="200"
+                write-concern="REPLICAS_SAFE"
+                read-preference="SECONDARY_PREFERRED"/>
+    </mongo:mongo-client>
+    <mongo:db-factory id="mongoDbFactory2016" mongo-ref="mongo2016" dbname="${mongo2016.databaseName}"/>
+    <bean id="mongoMappingContext2016" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"/>
+    <bean id="mappingMongoConverter2016" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory2016" />
+        <constructor-arg name="mappingContext" ref="mongoMappingContext2016" />
+    </bean>
+    <bean id="mongoTemplate2016" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory2016"/>
+        <constructor-arg name="mongoConverter" ref="mappingMongoConverter2016"/>
+    </bean>
+
+    <mongo:mongo-client id="mongo2017" replica-set="${mongo2017.replicaset}" credentials="${mongo2017.username}:${mongo2017.password}@${mongo2017.databaseName}">
+        <mongo:client-options
+                max-wait-time="12000"
+                min-connections-per-host="50"
+                connections-per-host="200"
+                write-concern="REPLICAS_SAFE"
+                read-preference="SECONDARY_PREFERRED"/>
+    </mongo:mongo-client>
+    <mongo:db-factory id="mongoDbFactory2017" mongo-ref="mongo2017" dbname="${mongo2017.databaseName}"/>
+    <bean id="mongoMappingContext2017" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"/>
+    <bean id="mappingMongoConverter2017" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory2017" />
+        <constructor-arg name="mappingContext" ref="mongoMappingContext2017" />
+    </bean>
+    <bean id="mongoTemplate2017" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory2017"/>
+        <constructor-arg name="mongoConverter" ref="mappingMongoConverter2017"/>
+    </bean>
+
+    <mongo:mongo-client id="mongo2018" replica-set="${mongo2018.replicaset}" credentials="${mongo2018.username}:${mongo2018.password}@${mongo2018.databaseName}">
+        <mongo:client-options
+                max-wait-time="12000"
+                min-connections-per-host="50"
+                connections-per-host="200"
+                write-concern="REPLICAS_SAFE"
+                read-preference="SECONDARY_PREFERRED"/>
+    </mongo:mongo-client>
+    <mongo:db-factory id="mongoDbFactory2018" mongo-ref="mongo2018" dbname="${mongo2018.databaseName}"/>
+    <bean id="mongoMappingContext2018" class="org.springframework.data.mongodb.core.mapping.MongoMappingContext"/>
+    <bean id="mappingMongoConverter2018" class="org.springframework.data.mongodb.core.convert.MappingMongoConverter">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory2018" />
+        <constructor-arg name="mappingContext" ref="mongoMappingContext2018" />
+    </bean>
+    <bean id="mongoTemplate2018" class="org.springframework.data.mongodb.core.MongoTemplate">
+        <constructor-arg name="mongoDbFactory" ref="mongoDbFactory2018"/>
+        <constructor-arg name="mongoConverter" ref="mappingMongoConverter2018"/>
+    </bean>
+
+    <bean id="mongoDBTemplate" class="net.xuele.common.mongo.dao.multi.MongoDBTemplate">
+        <property name="targetMongoTemplates">
+            <map key-type="java.lang.String">
+                <entry key="mongoMain" value-ref="mongoTemplateMain"></entry>
+                <entry key="mongo2015" value-ref="mongoTemplate2015"></entry>
+                <entry key="mongo2016" value-ref="mongoTemplate2016"></entry>
+                <entry key="mongo2017" value-ref="mongoTemplate2017"></entry>
+                <entry key="mongo2018" value-ref="mongoTemplate2018"></entry>
+            </map>
+        </property>
+        <property name="defaultTargetMongoTemplate" ref="mongoTemplateMain"/>
+    </bean>
+
+
+    <bean id="asyncHttpReporter" class="net.xuele.interceptor.AsyncHttpReporterFactoryBean">
+        <property name="host" value="${zipkin.url}"/>
+    </bean>
+    <bean id="brave" class="net.xuele.interceptor.BraveFactoryBean">
+        <property name="serviceName" value="${service.name}"/>
+        <property name="reporter" ref="asyncHttpReporter"/>
+        <property name="sampleRate" value="${sample.ratio}"/>
+    </bean>
+    <bean id="persistFilterManagementBean" class="net.xuele.interceptor.persist.PersistFilterManagementBean">
+        <constructor-arg ref="brave"/>
+    </bean>
+    <bean id="persistFilter" class="net.xuele.interceptor.persist.PersistFilter"/>
+</beans>
