@@ -10,10 +10,6 @@ public class DecisionInfo {
      */
     private String strategy;
     /**
-     * 表名或者针对某些同一规则表的抽象key
-     */
-    private String collectionName;
-    /**
      * 策略需要的附属信息,比如直接指定某个数据库
      */
     private String specify;
@@ -28,14 +24,6 @@ public class DecisionInfo {
 
     public void setStrategy(String strategy) {
         this.strategy = strategy;
-    }
-
-    public String getCollectionName() {
-        return collectionName;
-    }
-
-    public void setCollectionName(String collectionName) {
-        this.collectionName = collectionName;
     }
 
     public String getSpecify() {

@@ -17,11 +17,6 @@ public @interface MultiMongo {
     String specify() default "";
 
     /**
-     * 针对的表名.
-     */
-    String collectionName() default "";
-
-    /**
      * 策略需要的参数值的位置,-1代表非必须
      */
     int paramLocation() default -1;

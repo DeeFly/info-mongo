@@ -45,7 +45,7 @@
 
     <!--切面 代理 编织切面 （应该就是将切面和切面处理方法编织起来的工具吧）
     如果使用了java 8 的一些新特性，版本过低（1.6.9）会出现这个异常：
-    org.aspectj.apache.bcel.classfile.ClassFormatException: File: 'info.gaofei.infomongo.tests.MultiMongoTest': Invalid byte tag in constant pool: 18
+    org.aspectj.apache.bcel.classfile.ClassFormatException: File: 'info.gaofei.infomongo.tests.SimpleMultiMongoTest': Invalid byte tag in constant pool: 18
     -->
     <dependency>
       <groupId>org.aspectj</groupId>

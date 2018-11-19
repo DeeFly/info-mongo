@@ -68,7 +68,6 @@ public class DBDecisionDaoAop implements ApplicationContextAware {
     protected DecisionInfo buildDecisionInfo(MultiMongo multiMongo, ProceedingJoinPoint joinPoint) {
         DecisionInfo result = new DecisionInfo();
         result.setSpecify(multiMongo.specify());
-        result.setCollectionName(multiMongo.collectionName());
         result.setStrategy(multiMongo.strategy());
         int paramLocation;
         if ((paramLocation = multiMongo.paramLocation()) >= 0) {

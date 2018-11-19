@@ -28,6 +28,7 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.spri
     </aop:config>
 
     <bean class="info.gaofei.infomongo.aop.handler.DefaultDecisionHandler"/>
+    <bean class="info.gaofei.infomongo.customizedhandler.DateHandler"/>
 
 
 

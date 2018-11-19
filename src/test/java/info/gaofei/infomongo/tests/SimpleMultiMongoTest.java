@@ -13,14 +13,14 @@ import java.util.List;
 /**
  * Created by GaoQingming on 2018/11/19 0019.
  */
-public class MultiMongoTest extends MongoTestBase {
+public class SimpleMultiMongoTest extends MongoTestBase {
     @Resource
     private UserDao userDao;
 
     @Test
     public void insertUserTest() {
         User user = new User();
-        user.setCreateDate(new Date());
+        user.setCreateTime(new Date());
         user.setName("gaofei");
         userDao.insert(user);
         Assert.assertNotNull(user.getId());

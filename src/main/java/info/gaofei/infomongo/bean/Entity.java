@@ -4,6 +4,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.Date;
+
 /**
  * Created by GaoQingming on 2018/11/15 0015.
  */
@@ -11,6 +13,9 @@ public class Entity implements Comparable<Entity> {
     @Id
     @Field(IdKey.id)
     private String id;
+
+    @Field("crtTm")
+    protected Date createTime;
 
     @Override
     public int hashCode() {
@@ -60,5 +65,13 @@ public class Entity implements Comparable<Entity> {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
