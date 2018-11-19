@@ -1,10 +1,12 @@
 package info.gaofei.infomongo.aop.handler;
 
 import info.gaofei.infomongo.aop.DecisionInfo;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by GaoQingming on 2018/11/15 0015.
  */
+@Component
 public class DefaultDecisionHandler<T extends DecisionInfo> implements DecisionHandler<T> {
     public static final String SPECIFIED = "SPECIFIED";
 
@@ -16,7 +18,7 @@ public class DefaultDecisionHandler<T extends DecisionInfo> implements DecisionH
      */
     @Override
     public boolean support(T decisionInfo) {
-        if (decisionInfo.getStrategy().equals(SPECIFIED)) {
+        if (SPECIFIED.equals(decisionInfo.getStrategy())) {
             return true;
         }
         return false;

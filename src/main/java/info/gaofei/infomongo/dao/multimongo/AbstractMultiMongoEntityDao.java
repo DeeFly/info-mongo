@@ -2,13 +2,14 @@ package info.gaofei.infomongo.dao.multimongo;
 
 import info.gaofei.infomongo.bean.Entity;
 import info.gaofei.infomongo.dao.AbstractEntityDao;
-import info.gaofei.infomongo.dao.multimongo.MongoTemplateHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 /**
  * Created by GaoQingming on 2018/11/15 0015.
  */
 public abstract class AbstractMultiMongoEntityDao<E extends Entity> extends AbstractEntityDao<E> {
+    @Autowired
     private MongoTemplateHolder templateHolder;
 
     @Override

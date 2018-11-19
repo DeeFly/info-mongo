@@ -1,0 +1,14 @@
+mongo2015.replicaset = 192.168.30.251:27017,192.168.30.252:27017,192.168.30.253:27017
+mongo2015.username = work
+mongo2015.password = 123456
+mongo2015.databaseName = work2015
+
+mongo2016.replicaset = 192.168.30.251:27017,192.168.30.252:27017,192.168.30.253:27017
+mongo2016.username = work
+mongo2016.password = 123456
+mongo2016.databaseName = work2016
+
+mongomain.replicaset = 192.168.30.247:27017,192.168.30.248:27017,192.168.30.249:27017
+mongomain.username = work
+mongomain.password = 123456
+mongomain.databaseName = work

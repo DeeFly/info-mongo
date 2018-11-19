@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <property name="projectName" value="faofeiweb"/>
+    <contextName>${projectName}</contextName>
+
+    <!--这个链接里面有很详细的介绍  logback的
+    http://www.cnblogs.com/warking/p/5710303.html
+    -->
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
+
+        <encoder charset="UTF-8" class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>[logback] %-5level %d{MMdd HH:mm:ss} \(%F:%L\) %method\(\) - %m%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- 按照每天生成日志文件 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logback/web/${projectName}.log</file>
+        <Encoding>UTF-8</Encoding>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--日志文件输出的文件名-->
+            <FileNamePattern>logback/web/${projectName}.%d{yyyy-MM-dd}.%i.log</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- or whenever the file size reaches 100MB -->
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+    <!--打点日志-->
+    <!--<appender name="BusinessDataFile" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+        <!--    <Encoding>UTF-8</Encoding>-->
+        <!--    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+        <!--        &lt;!&ndash;日志文件输出的文件名&ndash;&gt;-->
+        <!--        <FileNamePattern>logback/data/${projectName}-${HOSTNAME}-userLog-%d{yyyyMMddHH}-%i.log</FileNamePattern>-->
+        <!--        <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+        <!--            &lt;!&ndash; or whenever the file size reaches 100MB &ndash;&gt;-->
+        <!--            <maxFileSize>100MB</maxFileSize>-->
+        <!--        </timeBasedFileNamingAndTriggeringPolicy>-->
+        <!--    </rollingPolicy>-->
+        <!--    <layout class="ch.qos.logback.classic.PatternLayout">-->
+        <!--        &lt;!&ndash;格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符&ndash;&gt;-->
+        <!--        <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} &#45;&#45; %msg%n</pattern>-->
+        <!--    </layout>-->
+    <!--</appender>-->
+    <logger name="net.xuele.common.log.BusinessLogWriter" level="INFO" additivity="false">
+        <appender-ref ref="BusinessDataFile"/>
+    </logger>
+    <logger name="com.apache.ibatis" level="INFO"/>
+    <logger name="java.sql.Statement" level="INFO"/>
+    <logger name="java.sql.PreparedStatement" level="INFO"/>
+    <logger name="java.sql.ResultSet" level="INFO"/>
+
+
+    <root>
+        <appender-ref ref="FILE" />
+        <appender-ref ref="CONSOLE" />
+        <level value="INFO" />
+    </root>
+
+</configuration>

@@ -3,7 +3,6 @@ package info.gaofei.infomongo.dao;
 import info.gaofei.infomongo.bean.Entity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.MongoCollectionUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -30,8 +29,6 @@ public abstract class AbstractEntityDao<E extends Entity> implements EntityDao<E
      * 集合名称
      */
     private String collectionName;
-    @Autowired
-    private MongoTemplate mongoTemplate;
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public AbstractEntityDao() {
@@ -48,9 +45,7 @@ public abstract class AbstractEntityDao<E extends Entity> implements EntityDao<E
 
     }
 
-    protected MongoTemplate getMongoTemplate() {
-        return this.mongoTemplate;
-    }
+    protected abstract MongoTemplate getMongoTemplate();
 
     protected String getCollectionName() {
         return this.collectionName;
@@ -58,6 +53,10 @@ public abstract class AbstractEntityDao<E extends Entity> implements EntityDao<E
 
     protected Class<E> getClassType() {
         return this.classType;
+    }
+
+    public List<E> find(Query query) {
+        return find(query, classType);
     }
 
     @Override

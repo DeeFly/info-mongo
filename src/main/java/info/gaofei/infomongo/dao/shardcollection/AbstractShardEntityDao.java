@@ -84,11 +84,16 @@ public abstract class AbstractShardEntityDao<E extends Entity> implements Entity
     }
 
     private int shardingCountFor(int i) {
+        int pre = i;
         if (i < 0)
             throw new IllegalArgumentException("Illegal initial shard count : " + i);
         if (i > MAXIMUM_CAPACITY)
             i = MAXIMUM_CAPACITY;
-        return tableSizeFor(i);
+        int result = tableSizeFor(i);
+        if (pre != result) {
+            logger.warn("Bad initial shard count : {}, converted to : {}", pre, result);
+        }
+        return result;
     }
 
     /**
