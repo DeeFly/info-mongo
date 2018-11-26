@@ -25,7 +25,7 @@ public class DateBasedMultiMongoTest extends MongoTestBase {
         User user = new User();
         Date date = null;
         try {
-            date = simpleDateFormat.parse("2015-10-1 10:20:23");
+            date = simpleDateFormat.parse("2018-10-1 10:20:23");
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -39,7 +39,7 @@ public class DateBasedMultiMongoTest extends MongoTestBase {
     public void findUsersTest() {
         Date date = null;
         try {
-            date = simpleDateFormat.parse("2015-10-1 10:20:23");
+            date = simpleDateFormat.parse("2018-10-1 10:20:23");
         } catch (ParseException e) {
             e.printStackTrace();
         }
