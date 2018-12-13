@@ -112,7 +112,13 @@ public abstract class AbstractShardEntityDao<E extends Entity> implements Entity
         return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
     }
 
-    private String shardingKeyToCollectionName(Object shardValue) {
+    /**
+     * TODO
+     * 这里可以改成抽象模板方法，交给子类实现具体的分表策略。
+     * @param shardValue
+     * @return
+     */
+    protected String shardingKeyToCollectionName(Object shardValue) {
         Optional.ofNullable(shardValue).orElseThrow(() -> new IllegalArgumentException("shard value shouldn't be empty !"));
         int hashCode = shardValue.hashCode();
         int tableSequence = hashCode & shardingCount - 1;
